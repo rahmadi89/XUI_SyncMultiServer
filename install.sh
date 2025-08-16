@@ -79,6 +79,8 @@ while true; do
     esc_USER=$(printf '%s' "$USER" | sed 's/"/\\"/g')
     esc_PASS=$(printf '%s' "$PASS" | sed 's/"/\\"/g')
 
+    print($esc_BASE_URL)
+
     # Test login using curl with escaped values
     response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$esc_BASE_URL/login" \
         -d "username=$esc_USER&password=$esc_PASS" \
@@ -87,7 +89,7 @@ while true; do
         --max-time 10)
 
     if [ "$response" -ne 200 ]; then
-        echo -e "\033[0;31m[!] Login failed for $esc_USER@$esc_BASE_URL/login\033[0m"
+        echo -e "\033[0;31m[!] Login failed for $esc_USER@$esc_BASE_URL\033[0m"
         echo "Please re-enter server info."
         continue
     else
