@@ -5,7 +5,8 @@ If a user has more traffic usage or a larger total quota on one server, the scri
 
 ⚡ **Important:** The script must be installed on **every server** to work properly.
 
-Tested ojn Ubuntu 22.04  ✔
+Tested on 
+- [x] Ubuntu 22.04
 
 
 ## 🚀 Installation
@@ -41,4 +42,7 @@ bash <(curl -Ls "https://raw.githubusercontent.com/rahmadi89/XUI_SyncMultiServer
 bash <(curl -Ls "https://raw.githubusercontent.com/rahmadi89/XUI_SyncMultiServer/main/install.sh") --uninstall
 ```
 
-ToDo: Check login at install time and the add config
+## TODO
+
+- [x] Write Read me in both english and persian
+- [ ] Check login at install time and the add config
