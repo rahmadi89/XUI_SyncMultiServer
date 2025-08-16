@@ -17,8 +17,6 @@ CRON_JOB="* * * * * cd $APP_DIR && $PYTHON_PATH $APP_DIR/$SCRIPT_NAME"
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}Fatal error: ${plain} Please run this script with root privilege \n " && exit 1
 
-apt-get update && apt-get install -y wget curl tar tzdata
-
 echo "=== $APP_NAME Installer ==="
 
 if [ "$1" == "--uninstall" ]; then
@@ -37,6 +35,8 @@ if [ -d "$APP_DIR" ]; then
         *) echo "Installation aborted."; exit 0 ;;
     esac
 fi
+
+apt-get update && apt-get install -y wget curl tar tzdata
 
 mkdir -p "$APP_DIR"
 echo "Downloading files..."
