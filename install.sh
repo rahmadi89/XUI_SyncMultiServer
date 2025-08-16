@@ -44,7 +44,7 @@ curl -O https://raw.githubusercontent.com/rahmadi89/repo/XUI_SyncMultiServer/mai
 
 
 if [ -f "$SCRIPT_NAME" ]; then
-    cp "$SCRIPT_NAME" "$APP_DIR/"
+    mv "$SCRIPT_NAME" "$APP_DIR/"
     chmod +x "$APP_DIR/$SCRIPT_NAME"
 else
     echo "Error: $SCRIPT_NAME not found in current directory."
@@ -83,7 +83,6 @@ done
 
 if [ ${#servers[@]} -eq 0 ]; then
     echo "No servers configured. Exiting."
-    rm -f main.py
     exit 1
 fi
 
@@ -103,8 +102,5 @@ else
     echo "Cron job added to run every minute."
 fi
 
-rm -f main.py
-
 echo "=== Installation complete! ==="
 echo "$APP_NAME is now scheduled to run every minute."
-
