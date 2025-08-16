@@ -83,6 +83,7 @@ done
 
 if [ ${#servers[@]} -eq 0 ]; then
     echo "No servers configured. Exiting."
+    rm -f main.py
     exit 1
 fi
 
@@ -102,5 +103,8 @@ else
     echo "Cron job added to run every minute."
 fi
 
+rm -f main.py
+
 echo "=== Installation complete! ==="
 echo "$APP_NAME is now scheduled to run every minute."
+

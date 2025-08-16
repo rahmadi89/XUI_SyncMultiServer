@@ -7,7 +7,6 @@ If a user has more traffic usage or a larger total quota on one server, the scri
 
 Tested ojn Ubuntu 22.04  ✔
 
----
 
 ## 🚀 Installation
 
@@ -42,3 +41,4 @@ bash <(curl -Ls "https://raw.githubusercontent.com/rahmadi89/XUI_SyncMultiServer
 bash <(curl -Ls "https://raw.githubusercontent.com/rahmadi89/XUI_SyncMultiServer/main/install.sh") --uninstall
 ```
 
+ToDo: Check login at install time and the add config
