@@ -79,7 +79,7 @@ while true; do
     esc_USER=$(printf '%s' "$USER" | sed 's/"/\\"/g')
     esc_PASS=$(printf '%s' "$PASS" | sed 's/"/\\"/g')
 
-    print($esc_BASE_URL)
+    echo $esc_BASE_URL/login
 
     # Test login using curl with escaped values
     response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$esc_BASE_URL/login" \
