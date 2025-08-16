@@ -72,7 +72,7 @@ while true; do
     echo
 
     echo "Please wait while testing login informations..."
-    
+
     # Escape double quotes in inputs
     esc_NAME=$(printf '%s' "$NAME" | sed 's/"/\\"/g')
     esc_BASE_URL=$(printf '%s' "$BASE_URL" | sed 's/"/\\"/g')
@@ -84,9 +84,9 @@ while true; do
 import requests
 import sys
 
-base_url = "$esc_BASE_URL"
-username = "$esc_USER"
-password = "$esc_PASS"
+base_url = "$BASE_URL"
+username = "$USER"
+password = "$PASS"
 
 try:
     resp = requests.post(f"{base_url.rstrip('/')}/login", data={"username": username, "password": password}, verify=False, timeout=10)
