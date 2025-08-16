@@ -71,6 +71,8 @@ while true; do
     read -s PASS
     echo
 
+    echo "Please wait while testing login informations..."
+    
     # Escape double quotes in inputs
     esc_NAME=$(printf '%s' "$NAME" | sed 's/"/\\"/g')
     esc_BASE_URL=$(printf '%s' "$BASE_URL" | sed 's/"/\\"/g')
