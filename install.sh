@@ -79,25 +79,18 @@ while true; do
     esc_USER=$(printf '%s' "$USER" | sed 's/"/\\"/g')
     esc_PASS=$(printf '%s' "$PASS" | sed 's/"/\\"/g')
 
-    # Test login using Python before saving
-    python3 - <<END
-import requests
-import sys
+    # Test login using curl with escaped values
+    response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$esc_BASE_URL/login" \
+        -d "username=$esc_USER&password=$esc_PASS" \
+        -k \
+        --max-time 10)
 
-base_url = "$BASE_URL"
-username = "$USER"
-password = "$PASS"
-
-try:
-    resp = requests.post(f"{base_url.rstrip('/')}/login", data={"username": username, "password": password}, verify=False, timeout=10)
-    resp.raise_for_status()
-except Exception as e:
-    print(f"[!] Login failed for {username}@{base_url}: {e}")
-    sys.exit(1)
-END
-    if [ $? -ne 0 ]; then
-        echo "Login failed. Please re-enter server info."
+    if [ "$response" -ne 200 ]; then
+        echo -e "\033[0;31m[!] Login failed for $esc_USER@$esc_BASE_URL\033[0m"
+        echo "Please re-enter server info."
         continue
+    else
+        echo -e "\033[0;32m[+] Login successful for $esc_USER@$esc_BASE_URL. Server added.\033[0m"
     fi
 
     # Append JSON object string to array
