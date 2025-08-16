@@ -55,13 +55,13 @@ echo "Now let's configure your servers."
 servers=()
 
 while true; do
-    echo "Enter server name (or leave empty to finish):"
+    echo "Enter server name (or leave empty to finish, example: Germany):"
     read NAME
     if [ -z "$NAME" ]; then
         break
     fi
 
-    echo "Enter base_url for '$NAME':"
+    echo "Enter base_url for '$NAME' (example: http://example.com:12345/ahslv982d92mjd8):"
     read BASE_URL
 
     echo "Enter username for '$NAME':"
@@ -77,8 +77,30 @@ while true; do
     esc_USER=$(printf '%s' "$USER" | sed 's/"/\\"/g')
     esc_PASS=$(printf '%s' "$PASS" | sed 's/"/\\"/g')
 
+    # Test login using Python before saving
+    python3 - <<END
+import requests
+import sys
+
+base_url = "$esc_BASE_URL"
+username = "$esc_USER"
+password = "$esc_PASS"
+
+try:
+    resp = requests.post(f"{base_url.rstrip('/')}/login", data={"username": username, "password": password}, verify=False, timeout=10)
+    resp.raise_for_status()
+except Exception as e:
+    print(f"[!] Login failed for {username}@{base_url}: {e}")
+    sys.exit(1)
+END
+    if [ $? -ne 0 ]; then
+        echo "Login failed. Please re-enter server info."
+        continue
+    fi
+
     # Append JSON object string to array
     servers+=("{\"name\": \"$esc_NAME\", \"base_url\": \"$esc_BASE_URL\", \"user\": \"$esc_USER\", \"pass\": \"$esc_PASS\"}")
+    echo -e "\033[0;32m[+] Login successful for $USER@$BASE_URL. Server added.\033[0m"
 done
 
 if [ ${#servers[@]} -eq 0 ]; then
