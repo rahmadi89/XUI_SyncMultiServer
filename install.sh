@@ -1,5 +1,10 @@
 #!/bin/bash
 
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+plain='\033[0m'
+
 APP_NAME="XUI_SyncMultiServer"
 APP_DIR="$HOME/.${APP_NAME}"
 PYTHON_PATH=$(which python3)
@@ -9,6 +14,10 @@ CRON_JOB="* * * * * cd $APP_DIR && $PYTHON_PATH $APP_DIR/$SCRIPT_NAME"
 # CRON_JOB="* * * * * cd $APP_DIR && $PYTHON_PATH $APP_DIR/$SCRIPT_NAME >> $APP_DIR/cron.log 2>&1"
 
 
+# check root
+[[ $EUID -ne 0 ]] && echo -e "${red}Fatal error: ${plain} Please run this script with root privilege \n " && exit 1
+
+apt-get update && apt-get install -y wget curl tar tzdata
 
 echo "=== $APP_NAME Installer ==="
 
@@ -30,6 +39,9 @@ if [ -d "$APP_DIR" ]; then
 fi
 
 mkdir -p "$APP_DIR"
+echo "Downloading files..."
+curl -O https://raw.githubusercontent.com/rahmadi89/repo/XUI_SyncMultiServer/main.py
+
 
 if [ -f "$SCRIPT_NAME" ]; then
     cp "$SCRIPT_NAME" "$APP_DIR/"
