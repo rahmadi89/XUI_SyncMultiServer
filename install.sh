@@ -83,10 +83,11 @@ while true; do
     response=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$esc_BASE_URL/login" \
         -d "username=$esc_USER&password=$esc_PASS" \
         -k \
+        --connect-timeout 5 \
         --max-time 10)
 
     if [ "$response" -ne 200 ]; then
-        echo -e "\033[0;31m[!] Login failed for $esc_USER@$esc_BASE_URL\033[0m"
+        echo -e "\033[0;31m[!] Login failed for $esc_USER@$esc_BASE_URL/login\033[0m"
         echo "Please re-enter server info."
         continue
     else
